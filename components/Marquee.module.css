@@ -1,0 +1,41 @@
+.marquee {
+  position: relative;
+  overflow: hidden;
+  padding-block: clamp(1.5rem, 4vw, 3.5rem);
+  /* La bande respire au-dessus du backdrop. */
+}
+.track {
+  display: flex;
+  align-items: center;
+  gap: clamp(2rem, 5vw, 5rem);
+  width: max-content;
+  will-change: transform;
+}
+.word {
+  font-family: var(--font-display);
+  font-weight: 360;
+  font-size: clamp(5rem, 17vw, 17rem);
+  line-height: 0.9;
+  letter-spacing: -0.03em;
+  white-space: nowrap;
+  color: var(--ink);
+  font-variation-settings: "opsz" 144;
+}
+/* Un mot sur deux en contour (outline) — contraste graphique. */
+.word.outline {
+  color: transparent;
+  -webkit-text-stroke: 1.5px var(--ink-soft);
+}
+.star {
+  font-size: clamp(2rem, 6vw, 6rem);
+  color: var(--accent);
+}
+
+/* Variante sombre (sur un stage de nuit). */
+.dark .word {
+  color: var(--cream-veil);
+}
+.dark .word.outline {
+  color: transparent;
+  -webkit-text-stroke: 1.5px rgba(244, 239, 230, 0.5);
+}

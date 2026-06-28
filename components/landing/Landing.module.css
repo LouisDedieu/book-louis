@@ -1,0 +1,178 @@
+.landing {
+  position: relative;
+  width: 100%;
+  height: 100svh;
+  overflow: hidden;
+}
+
+/* --- Loader d'entrée : voile crème qui se lève --- */
+.loader {
+  position: absolute;
+  inset: 0;
+  z-index: 8;
+  background: var(--cream);
+  display: grid;
+  place-items: center;
+  animation: loaderOut 1s var(--ease-out) 0.7s forwards;
+}
+.loaderBrand {
+  font-size: var(--step--1);
+  letter-spacing: 0.35em;
+  text-transform: uppercase;
+  color: var(--ink-soft);
+  animation: loaderBrand 1.7s var(--ease-out) both;
+}
+@keyframes loaderOut {
+  to {
+    transform: translateY(-100%);
+  }
+}
+@keyframes loaderBrand {
+  0% { opacity: 0; letter-spacing: 0.6em; }
+  35% { opacity: 1; }
+  100% { opacity: 0; letter-spacing: 0.35em; }
+}
+
+.topline {
+  position: absolute;
+  top: clamp(1.4rem, 3vh, 2.4rem);
+  left: 50%;
+  transform: translateX(-50%);
+  z-index: 3;
+  font-size: var(--step-0);
+  color: var(--ink-soft);
+  text-align: center;
+  animation: fadeIn 0.9s var(--ease-out) 1s both;
+}
+.topline u {
+  text-underline-offset: 3px;
+}
+
+/* Grand titre derrière le carousel. */
+.title {
+  position: absolute;
+  top: 30%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  z-index: 1;
+  font-family: var(--font-display);
+  font-size: clamp(5rem, 21vw, 22rem);
+  line-height: 0.9;
+  letter-spacing: -0.03em;
+  color: var(--ink);
+  white-space: nowrap;
+  font-variation-settings: "opsz" 144;
+  pointer-events: none;
+  animation: titleReveal 1.3s var(--ease-out) 0.8s both;
+}
+@keyframes titleReveal {
+  from {
+    clip-path: inset(0 0 100% 0);
+    transform: translate(-50%, calc(-50% + 40px));
+  }
+  to {
+    clip-path: inset(0 0 0 0);
+    transform: translate(-50%, -50%);
+  }
+}
+
+.stage {
+  position: absolute;
+  inset: 0;
+  z-index: 2;
+}
+
+/* Barre de contrôle en bas. */
+.controls {
+  position: absolute;
+  left: 50%;
+  bottom: clamp(1.6rem, 4vh, 3rem);
+  transform: translateX(-50%);
+  z-index: 3;
+  display: flex;
+  align-items: center;
+  gap: 0.6rem;
+  animation: fadeUp 0.9s var(--ease-out) 1.2s both;
+}
+@keyframes fadeUp {
+  from {
+    opacity: 0;
+    transform: translate(-50%, 20px);
+  }
+  to {
+    opacity: 1;
+    transform: translate(-50%, 0);
+  }
+}
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+.category {
+  display: flex;
+  align-items: center;
+  gap: 0.9rem;
+  padding: 0.5rem 0.5rem 0.5rem 0.6rem;
+  background: rgba(28, 26, 23, 0.06);
+  backdrop-filter: blur(8px);
+  border-radius: 999px;
+}
+.thumb {
+  width: 42px;
+  height: 42px;
+  border-radius: 50%;
+  object-fit: cover;
+  display: block;
+}
+.catText {
+  display: flex;
+  flex-direction: column;
+  line-height: 1.1;
+  padding-right: 0.9rem;
+}
+.catLabel {
+  font-size: 0.62rem;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  color: var(--ink-mute);
+}
+.catName {
+  font-size: var(--step-0);
+  font-weight: 500;
+  color: var(--ink);
+}
+.arrow {
+  width: 46px;
+  height: 46px;
+  border-radius: 50%;
+  background: rgba(28, 26, 23, 0.06);
+  backdrop-filter: blur(8px);
+  display: grid;
+  place-items: center;
+  color: var(--ink);
+  cursor: pointer;
+  transition: background-color 0.3s var(--ease-out);
+}
+.arrow:hover {
+  background: rgba(28, 26, 23, 0.14);
+}
+.hint {
+  position: absolute;
+  right: var(--gutter);
+  bottom: clamp(1.6rem, 4vh, 3rem);
+  z-index: 3;
+  color: var(--ink-mute);
+}
+
+@media (max-width: 720px) {
+  .title {
+    font-size: 30vw;
+  }
+  .hint {
+    display: none;
+  }
+}

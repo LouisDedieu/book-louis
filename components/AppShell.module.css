@@ -1,0 +1,41 @@
+.content {
+  position: relative;
+  /* Opacité uniquement : un transform créerait un bloc englobant qui casserait
+     le position:sticky/fixed des sections pinnées (pellicule).
+     Durée calée sur la fin de l'éclatement pour une apparition synchro. */
+  animation: fadeInContent 1.2s var(--ease-out) both;
+}
+@keyframes fadeInContent {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+
+.back {
+  position: fixed;
+  top: clamp(1rem, 2.5vh, 1.8rem);
+  left: var(--gutter);
+  z-index: 40;
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  padding: 0.55rem 1.1rem 0.55rem 0.9rem;
+  border-radius: 999px;
+  /* Chip givré sombre + texte clair : auto-contrastant quel que soit le mood
+     (crème / nuit) ou le contenu derrière (image, éclats). */
+  background: rgba(20, 16, 9, 0.55);
+  border: 1px solid rgba(244, 239, 230, 0.18);
+  box-shadow: 0 2px 14px rgba(0, 0, 0, 0.18);
+  backdrop-filter: blur(12px);
+  color: var(--cream-veil);
+  font-size: var(--step--1);
+  letter-spacing: 0.06em;
+  cursor: pointer;
+  transition: background-color 0.3s var(--ease-out);
+}
+.back:hover {
+  background: rgba(20, 16, 9, 0.72);
+}

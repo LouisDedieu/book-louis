@@ -1,0 +1,48 @@
+.seuil {
+  display: grid;
+  grid-template-columns: repeat(12, 1fr);
+  padding-block: var(--section-pad);
+  row-gap: clamp(2rem, 5vw, 4rem);
+}
+.lead {
+  grid-column: 2 / span 8;
+}
+.leadLine {
+  display: block;
+  overflow: hidden;
+}
+.leadLine > span {
+  display: block;
+  font-family: var(--font-display);
+  font-size: var(--step-3);
+  line-height: 1.02;
+  letter-spacing: -0.015em;
+  color: var(--ink);
+  font-variation-settings: "opsz" 80, "SOFT" 30;
+}
+.body {
+  grid-column: 7 / span 5;
+  display: flex;
+  flex-direction: column;
+  gap: 1.1rem;
+}
+.bodyLine {
+  display: block;
+  overflow: hidden;
+}
+.bodyLine > span {
+  display: block;
+  font-size: var(--step-1);
+  line-height: 1.4;
+  color: var(--ink-soft);
+}
+
+@media (max-width: 720px) {
+  .lead,
+  .body {
+    grid-column: 1 / -1;
+  }
+  .seuil {
+    padding-inline: var(--gutter);
+  }
+}

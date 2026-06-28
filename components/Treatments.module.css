@@ -1,0 +1,316 @@
+/* =========================================================================
+   Gabarits d'image V2 — profondeur, axe horizontal, ratios respectés.
+   ========================================================================= */
+
+/* --- Plan immersif (intensité 3) : ratio-safe, image entière sur fond sombre.
+   Le letterbox sombre = parti pris cinéma ; jamais de recadrage. --- */
+.stage {
+  position: relative;
+  height: 100svh;
+  min-height: 560px;
+  display: grid;
+  place-items: center;
+  overflow: hidden;
+}
+/* Image et numéro fantôme empilés dans la même cellule (centrés). */
+.stageMedia,
+.stageGhostEl {
+  grid-column: 1;
+  grid-row: 1;
+}
+.stageMedia {
+  position: relative;
+  z-index: 2;
+  height: 82svh;
+  width: min(94vw, 1400px);
+}
+.stageGhostEl {
+  place-self: center;
+  z-index: 1;
+}
+/* Typo fantôme géante : profondeur + fil narratif (le numéro de planche). */
+.ghost {
+  font-family: var(--font-display);
+  font-weight: 300;
+  line-height: 0.8;
+  color: rgba(244, 239, 230, 0.07);
+  user-select: none;
+  pointer-events: none;
+  white-space: nowrap;
+}
+.ghostNum {
+  font-size: clamp(12rem, 42vw, 46rem);
+  letter-spacing: -0.04em;
+}
+.stageCaption {
+  position: absolute;
+  left: var(--gutter);
+  bottom: clamp(2rem, 5vh, 4rem);
+  z-index: 3;
+  color: var(--cream-veil);
+  display: flex;
+  gap: 0.8rem;
+  align-items: baseline;
+  letter-spacing: 0.04em;
+}
+.stageCaption b {
+  font-family: var(--font-display);
+  font-weight: 400;
+  font-size: var(--step-1);
+}
+
+/* --- Image cadrée dans une marge crème, entrée latérale + numéro fantôme. --- */
+.framed {
+  position: relative;
+  display: grid;
+  grid-template-columns: repeat(12, 1fr);
+  align-items: end;
+  column-gap: var(--gutter);
+  padding-block: clamp(4rem, 9vw, 11rem);
+  overflow: clip;
+}
+.framed[data-align="left"] .frame {
+  grid-column: 1 / span 7;
+}
+.framed[data-align="left"] .meta {
+  grid-column: 9 / span 3;
+}
+.framed[data-align="right"] .frame {
+  grid-column: 6 / span 7;
+}
+.framed[data-align="right"] .meta {
+  grid-column: 2 / span 3;
+  text-align: right;
+  order: -1;
+}
+.frame {
+  position: relative;
+  width: 100%;
+}
+.framed .frame {
+  z-index: 1; /* au-dessus du mot fantôme */
+}
+.frameMedia {
+  position: relative;
+  width: 100%;
+  /* Profondeur : l'image se détache du fond. */
+  box-shadow: 0 40px 80px -50px rgba(20, 16, 9, 0.55);
+  /* Réaction à la vitesse de scroll. */
+  transform: skewY(var(--sk));
+  transition: transform 0.18s linear;
+}
+.meta {
+  padding-bottom: 0.6rem;
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+}
+.metaIndex {
+  font-family: var(--font-display);
+  font-size: var(--step-1);
+  color: var(--ink-soft);
+  line-height: 1;
+}
+/* Mot/numéro fantôme en fond de bloc clair (positionné en absolu, sans
+   transform CSS pour ne pas entrer en conflit avec la dérive GSAP). */
+.ghostInk {
+  color: rgba(28, 26, 23, 0.05);
+}
+.ghostWord {
+  position: absolute;
+  z-index: 0;
+  font-size: clamp(7rem, 22vw, 20rem);
+  bottom: 8%;
+}
+.framed[data-align="left"] .ghostWord {
+  right: -2vw;
+}
+.framed[data-align="right"] .ghostWord {
+  left: -2vw;
+}
+
+/* --- Reveal accentué : image étroite, beaucoup d'air, masque + dérive. --- */
+.revealBlock {
+  position: relative;
+  display: grid;
+  grid-template-columns: repeat(12, 1fr);
+  padding-block: clamp(5rem, 11vw, 13rem);
+  overflow: clip;
+}
+.revealBlock .frame {
+  grid-column: 4 / span 6;
+}
+.revealBlock .frameMedia {
+  box-shadow: 0 50px 90px -55px rgba(20, 16, 9, 0.5);
+}
+
+/* --- Respiration : petite image, mouvement minimal, énormément de vide. --- */
+.breath {
+  position: relative;
+  display: grid;
+  grid-template-columns: repeat(12, 1fr);
+  align-items: center;
+  padding-block: clamp(6rem, 14vw, 16rem);
+}
+.breath[data-align="left"] .frame {
+  grid-column: 2 / span 4;
+}
+.breath[data-align="right"] .frame {
+  grid-column: 8 / span 4;
+}
+.breath[data-align="left"] .meta {
+  grid-column: 7 / span 3;
+}
+.breath[data-align="right"] .meta {
+  grid-column: 3 / span 3;
+  text-align: right;
+}
+.breath .meta {
+  align-self: center;
+}
+
+/* --- Diptyque : paire côte à côte, parallaxes opposées + profondeur. --- */
+.diptych {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: clamp(0.75rem, 2.5vw, 2.5rem);
+  align-items: center;
+  padding-block: clamp(4rem, 8vw, 10rem);
+  padding-inline: var(--gutter);
+}
+.diptych .frame {
+  position: relative;
+}
+.diptych .frameMedia {
+  box-shadow: 0 40px 80px -55px rgba(20, 16, 9, 0.5);
+}
+.diptych .frame:first-child {
+  margin-top: clamp(2rem, 7vw, 7rem);
+}
+.diptych .frame:last-child {
+  margin-bottom: clamp(2rem, 7vw, 7rem);
+}
+
+/* --- Pinned : image figée (ratio-safe, contain), un texte la traverse. --- */
+.pinned {
+  position: relative;
+}
+.pinnedSticky {
+  position: relative;
+  height: 100svh;
+  overflow: hidden;
+  display: grid;
+  place-items: center;
+}
+.pinnedMedia {
+  position: relative;
+  z-index: 1;
+  height: 86svh;
+  width: min(94vw, 1400px);
+}
+.pinnedText {
+  position: absolute;
+  inset: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 2;
+  pointer-events: none;
+}
+.pinnedText p {
+  font-family: var(--font-display);
+  font-size: var(--step-3);
+  line-height: 1;
+  color: var(--cream-veil);
+  text-align: center;
+  letter-spacing: 0.05em;
+  text-transform: uppercase;
+  text-shadow: 0 2px 60px rgba(0, 0, 0, 0.6);
+}
+
+/* --- Pellicule horizontale pinnée : l'axe horizontal, frontalement. --- */
+.strip {
+  position: relative;
+  /* Hauteur de scroll = durée du défilement latéral (pin). */
+}
+.stripSticky {
+  position: sticky;
+  top: 0;
+  height: 100svh;
+  overflow: hidden;
+  display: flex;
+  align-items: center;
+}
+.stripTrack {
+  display: flex;
+  align-items: center;
+  gap: clamp(1.5rem, 4vw, 4rem);
+  padding-inline: var(--gutter);
+  will-change: transform;
+}
+.stripIntro {
+  flex: 0 0 auto;
+  width: min(42vw, 460px);
+  color: var(--cream-veil);
+}
+.stripIntro .eyebrow {
+  color: rgba(244, 239, 230, 0.6);
+}
+.stripIntro h3 {
+  font-family: var(--font-display);
+  font-size: var(--step-3);
+  line-height: 0.98;
+  margin-top: 1rem;
+  color: var(--cream-veil);
+}
+.stripItem {
+  position: relative;
+  flex: 0 0 auto;
+  height: 70svh;
+  box-shadow: 0 50px 90px -55px rgba(0, 0, 0, 0.7);
+  transform: skewX(var(--sk));
+  transition: transform 0.18s linear;
+}
+.stripCaption {
+  position: absolute;
+  left: 0;
+  bottom: -2.4rem;
+  color: rgba(244, 239, 230, 0.65);
+}
+
+@media (max-width: 720px) {
+  .framed,
+  .breath {
+    display: block;
+    padding-inline: var(--gutter);
+  }
+  .framed .frame,
+  .breath .frame {
+    width: 100%;
+    margin-bottom: 1rem;
+  }
+  .framed .meta,
+  .breath .meta {
+    text-align: left !important;
+  }
+  .ghostWord {
+    display: none; /* trop encombrant sur petit écran */
+  }
+  .revealBlock .frame {
+    grid-column: 1 / -1;
+  }
+  /* Les diptyques deviennent des séquences verticales (sens de paire conservé). */
+  .diptych {
+    grid-template-columns: 1fr;
+  }
+  .diptych .frame:first-child,
+  .diptych .frame:last-child {
+    margin: 0;
+  }
+  .stripIntro {
+    width: 70vw;
+  }
+  .stripItem {
+    height: 58svh;
+  }
+}

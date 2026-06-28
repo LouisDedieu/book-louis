@@ -1,49 +1,159 @@
+/* =========================================================================
+   Book photo · Louis Dedieu — tokens & socle
+   DA arrêtée : fond crème chaud, serif display + grotesque, le vide = matériau.
+   ========================================================================= */
+
 :root {
-  --background: #ffffff;
-  --foreground: #171717;
-}
+  /* --- Crème : socle dominant. Pas de blanc pur (clinique). --- */
+  --cream: #f4efe6;        /* fond principal, ivoire chaud */
+  --cream-deep: #ece4d6;   /* respiration alternée / blocs */
+  --cream-veil: #faf6ee;   /* surfaces les plus claires */
 
-@media (prefers-color-scheme: dark) {
-  :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
-  }
-}
+  /* --- Encres --- */
+  --ink: #1c1a17;          /* texte principal, presque noir chaud */
+  --ink-soft: #4a443c;     /* texte secondaire */
+  --ink-mute: #8a8175;     /* légendes, méta */
+  --line: #d9cfbe;         /* filets discrets sur crème */
 
-html {
-  height: 100%;
-}
+  /* --- Accent : ocre doré du Maroc, très sobre --- */
+  --accent: #b06a2c;
 
-html,
-body {
-  max-width: 100vw;
-  overflow-x: hidden;
-}
+  /* --- Tonalités de fond par chapitre (transition douce couleur/N&B) --- */
+  --night: #0e0d0b;        /* hero / immersif sombre */
+  --bg: var(--cream);
+  --fg: var(--ink);
 
-body {
-  min-height: 100%;
-  display: flex;
-  flex-direction: column;
-  color: var(--foreground);
-  background: var(--background);
-  font-family: Arial, Helvetica, sans-serif;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
+  /* Backdrop dynamique piloté par l'ambiance du bloc central (cf. Atmosphere). */
+  --stage: var(--cream);
+  --vignette: 0;
+
+  /* Skew piloté par la vitesse de scroll (cf. SmoothScrollProvider). */
+  --sk: 0deg;
+
+  /* --- Typo --- */
+  --font-display: Georgia, "Times New Roman", serif; /* fallback avant next/font */
+  --font-body: system-ui, sans-serif;
+
+  /* Échelle fluide (clamp) — les titres peuvent déborder la grille. */
+  --step--1: clamp(0.78rem, 0.74rem + 0.2vw, 0.9rem);
+  --step-0: clamp(1rem, 0.95rem + 0.25vw, 1.15rem);
+  --step-1: clamp(1.4rem, 1.2rem + 1vw, 2rem);
+  --step-2: clamp(2.2rem, 1.7rem + 2.4vw, 3.6rem);
+  --step-3: clamp(3.2rem, 2.2rem + 5vw, 6.5rem);
+  --step-4: clamp(4rem, 2.4rem + 8vw, 10rem);
+  --step-5: clamp(4.6rem, 2rem + 12vw, 14rem);
+
+  /* --- Rythme --- */
+  --gutter: clamp(1.25rem, 1rem + 3vw, 4.5rem);
+  --measure: 62ch;
+  --section-pad: clamp(5rem, 4rem + 9vw, 12rem);
+
+  --ease-out: cubic-bezier(0.22, 1, 0.36, 1);
 }
 
 * {
   box-sizing: border-box;
-  padding: 0;
   margin: 0;
+  padding: 0;
 }
+
+html {
+  /* Lenis gère le smooth scroll ; pas de scroll-behavior natif concurrent. */
+  -webkit-text-size-adjust: 100%;
+  background-color: var(--cream); /* base anti-flash sous le stage */
+}
+
+html.lenis,
+html.lenis body {
+  height: auto;
+}
+
+.lenis.lenis-smooth {
+  scroll-behavior: auto !important;
+}
+
+.lenis.lenis-stopped {
+  overflow: clip;
+}
+
+body {
+  /* Transparent : le backdrop atmosphérique (Atmosphere) transparaît partout. */
+  background: transparent;
+  color: var(--fg);
+  font-family: var(--font-body);
+  font-size: var(--step-0);
+  line-height: 1.6;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  overflow-x: clip;
+}
+
+/* Le contenu passe au-dessus du backdrop fixe (mais sous grain/vignette). */
+main {
+  position: relative;
+  z-index: 1;
+}
+
+h1, h2, h3 {
+  font-family: var(--font-display);
+  font-weight: 340;
+  line-height: 0.98;
+  letter-spacing: -0.015em;
+  font-variation-settings: "opsz" 144, "SOFT" 0;
+}
+
+p { text-wrap: pretty; }
 
 a {
   color: inherit;
   text-decoration: none;
 }
 
-@media (prefers-color-scheme: dark) {
-  html {
-    color-scheme: dark;
+img { display: block; }
+
+::selection {
+  background: var(--accent);
+  color: var(--cream-veil);
+}
+
+/* --- Utilitaires partagés --- */
+.shell {
+  width: 100%;
+  max-width: 1600px;
+  margin-inline: auto;
+  padding-inline: var(--gutter);
+}
+
+.eyebrow {
+  font-family: var(--font-body);
+  font-size: var(--step--1);
+  letter-spacing: 0.28em;
+  text-transform: uppercase;
+  color: var(--ink-mute);
+  font-weight: 500;
+}
+
+.caption {
+  font-family: var(--font-body);
+  font-size: var(--step--1);
+  color: var(--ink-mute);
+  letter-spacing: 0.01em;
+  line-height: 1.4;
+}
+
+/* Reveal générique : masque qui se lève. JS retire [data-reveal] quand visible. */
+[data-reveal] {
+  opacity: 0;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
   }
+  [data-reveal] { opacity: 1 !important; }
 }

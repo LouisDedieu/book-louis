@@ -1,0 +1,27 @@
+.fig {
+  position: relative;
+  width: 100%;
+  height: 100%;
+  overflow: hidden;
+  background: var(--cream-deep);
+}
+
+/* Ratio respecté (letterbox) : pas de fond, le stage sombre transparaît. */
+.figContain {
+  background: transparent;
+}
+
+/* Conteneur interne : porte la parallaxe / le scale (overflow masqué par .fig). */
+.inner {
+  position: absolute;
+  inset: 0;
+  will-change: transform;
+}
+
+.img {
+  object-fit: cover;
+}
+
+.imgContain {
+  object-fit: contain;
+}

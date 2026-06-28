@@ -1,0 +1,110 @@
+.hero {
+  position: relative;
+  height: 100svh;
+  min-height: 560px;
+  overflow: hidden;
+  background: var(--night);
+}
+
+.media {
+  position: absolute;
+  inset: -8% 0 0 0; /* marge pour la parallaxe au départ */
+  will-change: transform;
+}
+.img {
+  object-fit: cover;
+}
+/* Voile sombre en bas pour asseoir la typo claire. */
+.scrim {
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(
+    to top,
+    rgba(8, 7, 6, 0.55) 0%,
+    rgba(8, 7, 6, 0.1) 35%,
+    rgba(8, 7, 6, 0) 60%
+  );
+  z-index: 1;
+}
+
+.content {
+  position: absolute;
+  inset: 0;
+  z-index: 2;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-end;
+  padding: var(--gutter);
+  padding-bottom: clamp(3rem, 8vh, 7rem);
+}
+
+.line {
+  font-family: var(--font-display);
+  color: var(--cream-veil);
+  font-size: var(--step-4);
+  line-height: 0.95;
+  letter-spacing: -0.02em;
+  max-width: 16ch;
+  font-variation-settings: "opsz" 144, "SOFT" 0;
+}
+/* Chaque mot dans un masque qui s'ouvre. */
+.word {
+  display: inline-block;
+  overflow: hidden;
+  vertical-align: top;
+  padding-bottom: 0.12em; /* éviter le clip des jambages */
+}
+.word > span {
+  display: inline-block;
+  will-change: transform;
+}
+
+.cue {
+  position: absolute;
+  right: var(--gutter);
+  bottom: clamp(3rem, 8vh, 7rem);
+  z-index: 2;
+  display: flex;
+  align-items: center;
+  gap: 0.7rem;
+  color: var(--cream-veil);
+  writing-mode: vertical-rl;
+  letter-spacing: 0.3em;
+  text-transform: uppercase;
+  font-size: var(--step--1);
+}
+.cueDot {
+  width: 1px;
+  height: 48px;
+  background: var(--cream-veil);
+  transform-origin: top;
+}
+
+/* --- Preloader --- */
+.preloader {
+  position: fixed;
+  inset: 0;
+  z-index: 50;
+  background: var(--night);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: var(--cream-veil);
+}
+.preInner {
+  text-align: center;
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+}
+.preBrand {
+  font-size: var(--step--1);
+  letter-spacing: 0.35em;
+  text-transform: uppercase;
+  opacity: 0.7;
+}
+.preLine {
+  font-family: var(--font-display);
+  font-size: var(--step-2);
+  line-height: 1;
+}

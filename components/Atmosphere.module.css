@@ -1,0 +1,54 @@
+/* Backdrop dynamique : sa couleur (--stage) est pilotée par le bloc central. */
+.stage {
+  position: fixed;
+  inset: 0;
+  z-index: 0;
+  background-color: var(--stage, #f4efe6);
+  transition: background-color 0.9s var(--ease-out);
+  pointer-events: none;
+}
+
+/* Vignette douce — assise atmosphérique, renforcée quand le stage est sombre. */
+.vignette {
+  position: fixed;
+  inset: 0;
+  z-index: 4;
+  pointer-events: none;
+  background: radial-gradient(
+    130% 130% at 50% 45%,
+    transparent 70%,
+    rgba(0, 0, 0, calc(var(--vignette, 0) * 0.5)) 100%
+  );
+  transition: background 0.9s var(--ease-out);
+}
+
+/* Grain animé — léger, en soft-light, donne la matière argentique. */
+.grain {
+  position: fixed;
+  inset: -50%;
+  z-index: 5;
+  width: 200%;
+  height: 200%;
+  pointer-events: none;
+  opacity: 0.045;
+  mix-blend-mode: soft-light;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='160' height='160'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='2' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+  animation: grain 7s steps(6) infinite;
+  will-change: transform;
+}
+
+@keyframes grain {
+  0% { transform: translate(0, 0); }
+  16% { transform: translate(-6%, 4%); }
+  33% { transform: translate(5%, -7%); }
+  50% { transform: translate(-4%, 6%); }
+  66% { transform: translate(7%, 3%); }
+  83% { transform: translate(-5%, -5%); }
+  100% { transform: translate(0, 0); }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .grain {
+    animation: none;
+  }
+}

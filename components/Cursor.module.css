@@ -1,0 +1,47 @@
+.cursor {
+  position: fixed;
+  top: 0;
+  left: 0;
+  z-index: 60;
+  width: 14px;
+  height: 14px;
+  border-radius: 50%;
+  background: var(--cream-veil);
+  mix-blend-mode: difference;
+  pointer-events: none;
+  display: grid;
+  place-items: center;
+  will-change: transform, width, height;
+  transition: width 0.35s var(--ease-out), height 0.35s var(--ease-out),
+    background-color 0.35s var(--ease-out);
+}
+.cursor[data-active="true"] {
+  width: 92px;
+  height: 92px;
+  background: var(--cream-veil);
+}
+.label {
+  font-family: var(--font-body);
+  font-size: 0.7rem;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  color: var(--night);
+  opacity: 0;
+  transition: opacity 0.3s var(--ease-out);
+  mix-blend-mode: normal;
+}
+.cursor[data-active="true"] .label {
+  opacity: 1;
+}
+
+/* Pas de curseur custom sur tactile / sans souris fine. */
+@media (hover: none), (pointer: coarse) {
+  .cursor {
+    display: none;
+  }
+}
+@media (prefers-reduced-motion: reduce) {
+  .cursor {
+    display: none;
+  }
+}
